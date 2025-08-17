@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+kakao:
+  navi:
+    base-url: https://apis-navi.kakaomobility.com
+    rest-api-key: ${KAKAO_REST_API_KEY}
+
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: false
+    open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+        show_sql: false
+        format_sql: true
