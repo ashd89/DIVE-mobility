@@ -1,11 +1,10 @@
-package com.example.mobility.kakao.client
+package com.example.mobility.client
 
 import com.example.mobility.global.dto.composeWaypoint
 import com.example.mobility.global.dto.composeWaypoints
-import com.example.mobility.kakao.dto.req.ClientRequest
-import com.example.mobility.kakao.dto.res.KakaoDirectionsResponse
+import com.example.mobility.client.dto.req.ClientRequest
+import com.example.mobility.client.dto.res.KakaoDirectionsResponse
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service

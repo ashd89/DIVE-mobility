@@ -1,4 +1,4 @@
-package com.example.mobility.kakao.dto.res
+package com.example.mobility.client.dto.res
 
 data class KakaoDirectionsResponse(
     val transId: String? = null,
@@ -57,6 +57,8 @@ data class Road(
     val trafficState: Int,
     val vertexes: List<Double>
 )
+
+//todo 카멜케이스 변경 부분 단순 yml 추가로 실패 => 수정 필요
 
 //data class Guide(
 //    val name: String?,
