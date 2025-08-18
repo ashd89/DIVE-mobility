@@ -1,8 +1,8 @@
 package com.example.mobility.direction.controller
 
-import com.example.mobility.kakao.client.KakaoNaviClient
-import com.example.mobility.kakao.dto.req.ClientRequest
-import com.example.mobility.kakao.dto.res.KakaoDirectionsResponse
+import com.example.mobility.client.KakaoNaviClient
+import com.example.mobility.client.dto.req.ClientRequest
+import com.example.mobility.client.dto.res.KakaoDirectionsResponse
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

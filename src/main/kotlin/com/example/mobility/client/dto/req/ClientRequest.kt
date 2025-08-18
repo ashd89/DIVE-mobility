@@ -1,11 +1,11 @@
-package com.example.mobility.kakao.dto.req
+package com.example.mobility.client.dto.req
 
-import com.example.mobility.global.dto.Waypoint
+import com.example.mobility.global.dto.Coord
 
 data class ClientRequest (
-    val origin: Waypoint, //출발지
-    val destination: Waypoint, //목적지
-    val waypoints: List<Waypoint>, // 경유지
+    val origin: Coord, //출발지
+    val destination: Coord, //목적지
+    val waypoints: List<Coord>, // 경유지
     val priority: String? = "TIME", // 최소 시간 경로
     val avoid: String? = null, // 회피 루트
     val roadevent : Int? = 0, // 사고 반영
