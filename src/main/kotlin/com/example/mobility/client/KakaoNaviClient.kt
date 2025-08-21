@@ -1,9 +1,10 @@
-package com.example.mobility.kakao.client
+package com.example.mobility.client
 
 import com.example.mobility.global.dto.composeWaypoint
 import com.example.mobility.global.dto.composeWaypoints
-import com.example.mobility.kakao.dto.req.ClientRequest
-import com.example.mobility.kakao.dto.res.KakaoDirectionsResponse
+import com.example.mobility.client.dto.req.ClientRequest
+import com.example.mobility.client.dto.res.KakaoDirectionsResponse
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -23,13 +24,18 @@ class KakaoNaviClient(
 ) {
     private val timeout: Duration = Duration.ofSeconds(5)
 
+    companion object {
+        private val log = KotlinLogging.logger {}
+    }
+
+
     fun UriBuilder.kakaoDirectionsUri(req: ClientRequest): URI {
         return this.path("/v1/directions")
             .apply {
                 queryParam("origin", composeWaypoint(req.origin))
                 queryParam("destination", composeWaypoint(req.destination))
                 if (req.waypoints.isNotEmpty()) {
-                    queryParam("waypoint", composeWaypoints(req.waypoints))
+                    queryParam("waypoints", composeWaypoints(req.waypoints))
                 }
 
                 // Reflection으로 나머지 프로퍼티 자동 추가
@@ -53,6 +59,7 @@ class KakaoNaviClient(
         wc.get()
             .uri { b ->
                 b.kakaoDirectionsUri(req)
+                    .also { log.info { "\nKakao Directions GET $it" } }
             }
             .accept(MediaType.APPLICATION_JSON)
             .retrieve()
