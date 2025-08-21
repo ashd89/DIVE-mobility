@@ -22,8 +22,6 @@ class Pathes(
     @JoinColumn(name = "routes_id", nullable = false)
     val route: Routes,
 
-    val name: String,
-
     val distance: Int,
     val duration: Int,
 
@@ -31,7 +29,7 @@ class Pathes(
     val coords: LineString,
 
     @Column(name = "avg_score")
-    val avgScore: Double? = null,
+    val avgScore: Double? = 0.0,
 
     @Column(name = "is_main", nullable = false)
     val isMain: Boolean = false
