@@ -28,7 +28,7 @@ class User(
     val acrophobia: Boolean = false,
 
     @Column(columnDefinition = "geometry(Point,4326)", nullable = false)
-    val coord: Point
+    val coord: Point?
 ) : BaseEntity() {
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)

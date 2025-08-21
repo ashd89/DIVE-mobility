@@ -1,5 +1,11 @@
 package com.example.mobility.client.dto.res
 
+import com.example.mobility.direction.entity.Routes
+import com.example.mobility.direction.entity.Waypoints
+import com.example.mobility.global.dto.Coord
+import com.example.mobility.user.entity.User
+import org.locationtech.jts.geom.GeometryFactory
+
 data class KakaoDirectionsResponse(
     val transId: String? = null,
     val routes: List<Route> = emptyList()
@@ -13,21 +19,33 @@ data class Route(
 )
 
 data class Summary(
-    val origin: Point,
-    val destination: Point,
-    val waypoints: List<Point> = emptyList(),
+    val origin: Coord,
+    val destination: Coord,
+    val waypoints: List<Coord> = emptyList(),
     val priority: String,
     val bound: Bound,
     val fare: Fare,
     val distance: Int,
     val duration: Int
-)
-
-data class Point(
-    val name: String? = null,
-    val x: Double,
-    val y: Double
-)
+) {
+    fun toRouteEntity(user: User, kakaoRequestId: String?, geometryFactory: GeometryFactory) : Routes {
+        return Routes(
+            user = user,
+            kakaoRequestId = kakaoRequestId,
+            originCoord = origin.toGeoPoint(geometryFactory),
+            destinationCoord = destination.toGeoPoint(geometryFactory)
+        )
+    }
+    fun toWaypointEntities(route: Routes, geometryFactory: GeometryFactory): List<Waypoints> {
+        return waypoints.map { coord ->
+            Waypoints(
+                route = route,
+                coord = coord.toGeoPoint(geometryFactory),
+                name = coord.name
+            )
+        }
+    }
+}
 
 data class Bound(
     val minX: Double,

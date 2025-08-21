@@ -1,5 +1,8 @@
 package com.example.mobility.global.dto
 
+import org.locationtech.jts.geom.Coordinate
+import org.locationtech.jts.geom.GeometryFactory
+import org.locationtech.jts.geom.Point
 import kotlin.math.cos
 import kotlin.math.hypot
 
@@ -7,7 +10,11 @@ data class Coord(
     val name: String? = null,
     val x: Double,
     val y: Double
-)
+) {
+    fun toGeoPoint(geometryFactory: GeometryFactory): org.locationtech.jts.geom.Point? {
+        return geometryFactory.createPoint(Coordinate(this.x, this.y))
+    }
+}
 
 fun composeWaypoints(points: List<Coord>): String =
     points.joinToString(" | ") {
@@ -52,22 +59,25 @@ fun rectangleAroundSegment(
     // (ux,uy)는 AB의 단위 벡터 & (nx. ny)는 수직 벡터
     val (ux, uy) = if (len > 1e-6) dxE / len to dyN / len else 1.0 to 0.0
     val nx = -uy
-    val ny =  ux
+    val ny = ux
 
     // start->(0,0) end->(dxE, dxN)을 (nx,ny)로 4방향 평행 이동
-    val aLeftE  = nx * halfWidthMeters
-    val aLeftN  = ny * halfWidthMeters
-    val bLeftE  = dxE + nx * halfWidthMeters
-    val bLeftN  = dyN + ny * halfWidthMeters
+    val aLeftE = nx * halfWidthMeters
+    val aLeftN = ny * halfWidthMeters
+    val bLeftE = dxE + nx * halfWidthMeters
+    val bLeftN = dyN + ny * halfWidthMeters
     val aRightE = -nx * halfWidthMeters
     val aRightN = -ny * halfWidthMeters
     val bRightE = dxE - nx * halfWidthMeters
     val bRightN = dyN - ny * halfWidthMeters
 
     return listOf(
-        enToWaypoint(aLeftE,  aLeftN),
-        enToWaypoint(bLeftE,  bLeftN),
+        enToWaypoint(aLeftE, aLeftN),
+        enToWaypoint(bLeftE, bLeftN),
         enToWaypoint(bRightE, bRightN),
         enToWaypoint(aRightE, aRightN)
     )
 }
+
+fun Point?.toCoord(name: String? = null): Coord? =
+    this?.let { Coord(x = it.x, y = it.y, name = name) }

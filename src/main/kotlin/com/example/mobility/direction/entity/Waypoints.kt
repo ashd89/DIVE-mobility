@@ -13,7 +13,7 @@ import org.locationtech.jts.geom.Point
 
 @Entity
 @Table(name = "waypoints")
-class Waypoint(
+class Waypoints(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
@@ -21,8 +21,8 @@ class Waypoint(
     @JoinColumn(name = "routes_id", nullable = false)
     val route: Routes,
 
-    val name: String,
+    val name: String?,
 
     @Column(columnDefinition = "geometry(Point,4326)", nullable = false)
-    val coord: Point
+    val coord: Point?
 )

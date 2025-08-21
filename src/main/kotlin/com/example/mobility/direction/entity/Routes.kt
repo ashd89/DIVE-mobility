@@ -1,6 +1,9 @@
 package com.example.mobility.direction.entity
 
+import com.example.mobility.client.dto.res.CreateDirectionResponse
 import com.example.mobility.global.domain.BaseEntity
+import com.example.mobility.global.dto.Coord
+import com.example.mobility.global.dto.toCoord
 import com.example.mobility.user.entity.User
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -26,13 +29,13 @@ class Routes(
     val user: User,
 
     @Column(name = "kakao_request_id", nullable = false)
-    val kakaoRequestId: String,
+    val kakaoRequestId: String?,
 
     @Column(name = "origin_coord", columnDefinition = "geometry(Point,4326)", nullable = false)
-    val originCoord: Point,
+    val originCoord: Point?,
 
     @Column(name = "destination_coord", columnDefinition = "geometry(Point,4326)", nullable = false)
-    val destinationCoord: Point,
+    val destinationCoord: Point?,
 
     @Column(name = "is_main", nullable = false)
     val isMain: Boolean = false
@@ -42,5 +45,13 @@ class Routes(
     val paths: MutableList<Pathes> = mutableListOf()
 
     @OneToMany(mappedBy = "route", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val waypoints: MutableList<Waypoint> = mutableListOf()
+    val waypoints: MutableList<Waypoints> = mutableListOf()
+
+    fun toCreateDirectionResponse(waypoints: List<Point?>): CreateDirectionResponse =
+        CreateDirectionResponse(
+            origin = originCoord.toCoord(),
+            destination = destinationCoord.toCoord(),
+            waypoints = waypoints.map { it.toCoord() } as List<Coord>
+        )
+
 }
