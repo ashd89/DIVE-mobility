@@ -7,13 +7,13 @@ import com.example.mobility.user.entity.User
 import org.locationtech.jts.geom.GeometryFactory
 
 data class KakaoDirectionsResponse(
-    val transId: String? = null,
+    val trans_id: String? = null,
     val routes: List<Route> = emptyList()
 )
 
 data class Route(
-    val resultCode: Int,
-    val resultMsg: String? = null,
+    val result_code: Int,
+    val result_msg: String? = null,
     val summary: Summary,
     val sections: List<Section>
 )
@@ -23,8 +23,8 @@ data class Summary(
     val destination: Coord,
     val waypoints: List<Coord> = emptyList(),
     val priority: String,
-    val bound: Bound,
-    val fare: Fare,
+//    val bound: Bound,
+//    val fare: Fare,
     val distance: Int,
     val duration: Int
 ) {
@@ -47,22 +47,22 @@ data class Summary(
     }
 }
 
-data class Bound(
-    val minX: Double,
-    val minY: Double,
-    val maxX: Double,
-    val maxY: Double
-)
-
-data class Fare(
-    val taxi: Int, // 필요하면 Long 로 변경
-    val toll: Int
-)
+//data class Bound(
+//    val minX: Double,
+//    val minY: Double,
+//    val maxX: Double,
+//    val maxY: Double
+//)
+//
+//data class Fare(
+//    val taxi: Int, // 필요하면 Long 로 변경
+//    val toll: Int
+//)
 
 data class Section(
     val distance: Int,
     val duration: Int,
-    val bound: Bound,
+//    val bound: Bound,
     val roads: List<Road>,
 //    val guides: List<Guide>
 )
